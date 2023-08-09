@@ -16,3 +16,6 @@ Looking at the source code, it shows the following:
 
 ![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-08-09%2018-27-26.png?raw=true)
 
+It shows a URL in the head with an image. When clicking on the image, it will open a new page with the flag:
+
+![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-08-09%2018-33-21.png?raw=true)
