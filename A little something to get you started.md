@@ -15,6 +15,11 @@ Take a look at the source for the page
 Does anything seem out of the ordinary?
 </details>
 
+<details closed>
+<summary><b>Flag 0 - Hint 2</b></summary>
+The page looks really plain
+</details>
+
 ## Solution
 When the CTF is started it shows a main page with a welcome message</br>
 Looking at the source code, it shows the following:
