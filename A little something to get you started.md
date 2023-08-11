@@ -6,12 +6,12 @@ This write up will show how to solve the CTF for "A little something to get you 
 **Difficulty:** Trivial
 
 <details closed>
-<summary><b>Hint 1</b></summary>
+<summary><b>Flag 0 - Hint 1</b></summary>
 Take a look at the source for the page
 </details>
 
 <details closed>
-<summary><b>Hint 2</b></summary>
+<summary><b>Flag 0 - Hint 2</b></summary>
 Does anything seem out of the ordinary?
 </details>
 
