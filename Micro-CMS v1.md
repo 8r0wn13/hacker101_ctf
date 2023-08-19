@@ -21,6 +21,11 @@ Look at the sequence of IDs
 </details>
 
 <details closed>
+<summary><b>Flag 0 - Hint 4</b></summary>
+If the front door doesn't open, try the window
+</details>
+
+<details closed>
 <summary><b>Flag 1 - Hint 1</b></summary>
 Does anything seem out of the ordinary?
 </details>
@@ -35,10 +40,14 @@ Does anything seem out of the ordinary?
 Does anything seem out of the ordinary?
 </details>
 
-## Solution
+## Solution 1st flag
 Click on Create a new page and give a title and description</br>
 After submitting the new page, it will redirect to a URL ending with a number</br>
 When changing the numbers from 1 - 30, most pages respond Not Found, 1 is forbidden and a few are OK</br>
-Click on Edit Page and changes the numbers. Page number 4 (forbidden) will show a flag:
+Click on Edit Page and changes the number to the forbidden page 4, which will show a flag:
 
+![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-08-19%2001-21-07.png?raw=true)
+
+## Solution 2nd flag
+There is also an SQL injection, when editing a page and add a ' at the end of the URL:
 ![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-08-19%2001-21-07.png?raw=true)
