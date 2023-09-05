@@ -1,4 +1,4 @@
-# A little something to get you started
+# Micro-CMS v1
 
 ## Description
 This write up will show how to solve the CTF for "A little something to get you started"
