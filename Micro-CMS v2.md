@@ -10,3 +10,14 @@ Hints are not being provided for multiple reasons:</br>
 2. It is only possible to get a hint every once in a while, i.e. it is not possible to get all the hints one after another. This will take too much time to "wait" for all the hints
 
 ## Solution 1st flag
+
+
+
+
+## Solution 2nd flag
+
+
+
+
+
+## Solution 3rd flag
