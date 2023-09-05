@@ -5,20 +5,9 @@ This write up will show how to solve the CTF for "A little something to get you 
 
 **Difficulty:** Trivial
 
-<details closed>
-<summary><b>Flag 0 - Hint 1</b></summary>
-Take a look at the source for the page
-</details>
-
-<details closed>
-<summary><b>Flag 0 - Hint 2</b></summary>
-Does anything seem out of the ordinary?
-</details>
-
-<details closed>
-<summary><b>Flag 0 - Hint 2</b></summary>
-The page looks really plain
-</details>
+Hints are not being provided for multiple reasons:</br>
+1. It is better to figure it out yourself and I don't want to give spoilers, especially if you don't need one
+2. It is only possible to get a hint every once in a while, i.e. it is not possible to get all the hints one after another. This will take too much time to "wait" for all the hints
 
 ## Solution
 When the CTF is started it shows a main page with a welcome message</br>
