@@ -34,7 +34,7 @@ Going back to the home page will trigger the script and provide a pop-up with th
 When creating a new page or editing an existing page, it states markdown is supported, but scripts are not</br>
 This means a way needs to be found to include XSS in the markup</br>
 When editing the Markdown Test page it shows an image from adorable kittens in the body and there is a button</br>
-The button can trigger an event, hence we could do for example:
+The button can trigger an event, hence we could do for example:</br>
 `onclick=alert(1)`
 
 On the screren nothing happens when clicked on Save nor the button itself, but check the source code, there is the flag in the Button attribute:</br>
