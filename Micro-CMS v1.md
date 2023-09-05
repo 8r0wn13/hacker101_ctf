@@ -30,6 +30,12 @@ Going back to the home page will trigger the script and provide a pop-up with th
 
 ![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-09-05%2021-56-13.png?raw=true)
 
-
-
 ## Solution 4th flag
+When creating a new page or editing an existing page, it states markdown is supported, but scripts are not</br>
+This means a way needs to be found to include XSS in the markup</br>
+When editing the Markdown Test page it shows an image from adorable kittens in the body and there is a button</br>
+The button can trigger an event, hence we could do for example:
+`onclick=alert(1)`
+
+On the screren nothing happens when clicked on Save nor the button itself, but check the source code, there is the flag in the Button attribute:</br>
+![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-09-05%2022-08-44.png?raw=true)
