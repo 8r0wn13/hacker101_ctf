@@ -24,7 +24,7 @@ There is also an SQL injection, when editing a page and add a ' at the end of th
 ## Solution 3rd flag
 When creating a new page or editing a new page, the title allows for XSS</br>
 Add an alert script in the title and click on Save:</br>
-'<script>alert(1);</script>
+`<script>alert(1);</script>`
 
 
 
