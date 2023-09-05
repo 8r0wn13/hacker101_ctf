@@ -1,9 +1,9 @@
 # Micro-CMS v1
 
 ## Description
-This write up will show how to solve the CTF for "A little something to get you started"
+This write up will show how to solve the CTF for "Micro-CMS v1"
 
-**Difficulty:** Trivial
+**Difficulty:** Easy
 
 Hints are not being provided for multiple reasons:</br>
 1. It is better to figure it out yourself and I don't want to give spoilers, especially if you don't need one
