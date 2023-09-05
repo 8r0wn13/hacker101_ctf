@@ -20,3 +20,15 @@ Click on Edit Page and changes the number to the forbidden page 4, which will sh
 ## Solution 2nd flag
 There is also an SQL injection, when editing a page and add a ' at the end of the URL:
 ![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-08-19%2001-21-07.png?raw=true)
+
+## Solution 3rd flag
+When creating a new page or editing a new page, the title allows for XSS</br>
+Add an alert script in the title and click on Save:</br>
+'<script>alert(1);</script>
+
+
+
+
+
+
+## Solution 4th flag
