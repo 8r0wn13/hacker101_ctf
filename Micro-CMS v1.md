@@ -26,8 +26,9 @@ When creating a new page or editing a new page, the title allows for XSS</br>
 Add an alert script in the title and click on Save:</br>
 `<script>alert(1);</script>`
 
+Going back to the home page will trigger the script and provide a pop-up with the flag:
 
-
+![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-09-05%2021-56-13.png?raw=true)
 
 
 
