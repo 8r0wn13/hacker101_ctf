@@ -21,9 +21,10 @@ There is a Private Page, once clicked it will show the flag:
 ## Solution 2nd flag
 Click on Markdown Test and Edit Page</br>
 In the terminal execute the below command:</br>
-`curl -v -X POST https://038e18240aba44f163b46d8f251f1764.ctf.hacker101.com/page/edit/2`
+`curl -X POST https://038e18240aba44f163b46d8f251f1764.ctf.hacker101.com/page/edit/2`
 
-
+This make a request and will show the flag:</br>
+`^FLAG^b2847b8fedbcde8db7c2c99f605364a6dbaa0f24a4cb02587e45707ce6f80f60$FLAG$`
 
 ## Solution 3rd flag
 When trying to edit or create a new page it requires login details</br>
