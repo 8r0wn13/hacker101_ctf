@@ -19,6 +19,13 @@ There is a Private Page, once clicked it will show the flag:
 ![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-09-06%2021-59-38.png?raw=true)
 
 ## Solution 2nd flag
+Click on Markdown Test and Edit Page</br>
+In the terminal execute the below command:</br>
+`curl -v -X POST https://038e18240aba44f163b46d8f251f1764.ctf.hacker101.com/page/edit/2`
+
+
+
+## Solution 3rd flag
 When trying to edit or create a new page it requires login details</br>
 Try to login with just the username</br>
 Most probably it will return `Unknown User`</br>
@@ -35,5 +42,3 @@ Normally the Size Resp. Body is 455 bytes, when an existing user is found it wil
 The response will show the flag:
 
 ![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-09-06%2021-37-55.png?raw=true)
-
-## Solution 3rd flag
