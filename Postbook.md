@@ -61,10 +61,10 @@ This will be executed, i.e. it is possible to delete other peoples posts and it 
 ![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-10-02%2023-44-44.png?raw=true)
 
 ## Solution 6th flag
+To make sure, there are no "hidden" posts, let's go over each post id from 1 to 1000</br>
+It seems the post id's are ranging from 1 to 3 by default, plus any self created posts and a post at the end of the range with id 945, containing a flag as well!</br?
 
-
-
-
+![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-10-02%2023-51-03.png?raw=true)
 
 ## Solution 7th flag
 
