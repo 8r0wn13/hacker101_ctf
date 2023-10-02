@@ -67,6 +67,8 @@ It seems the post id's are ranging from 1 to 3 by default, plus any self created
 ![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-10-02%2023-51-03.png?raw=true)
 
 ## Solution 7th flag
+When creating a new post, there is a hidden field `user_id`, which is given along with the request</br>
+In Burp, turn on Intercept, create a new post and change the `user_id` to number 1 (admin) for example</br>
+This will create the post as admin in this case and give a flag</br>
 
-
-
+![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-10-03%2000-32-31.png?raw=true)
