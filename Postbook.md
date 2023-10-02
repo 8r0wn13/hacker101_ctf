@@ -37,10 +37,13 @@ Now logout as the normal user and log in with the credentials with the admin</br
 ![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-10-02%2003-03-20.png?raw=true)
 
 ## Solution 3rd flag
+There are 2 users, where we can perform a bruteforce attack on</br>
+For the admin, there are no matching password in my list</br>
+The user however, has the password `password`</br>
 
+Log in with the user `user` and password `password` in order to get the flag</br>
 
-
-
+![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-10-02%2023-26-53.png?raw=true)
 
 ## Solution 4th flag
 
