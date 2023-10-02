@@ -53,10 +53,12 @@ When changing the id to 2, and click on `Save`, it will show the flag</br>
 ![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-10-02%2023-33-30.png?raw=true)
 
 ## Solution 5th flag
+When deleting a post, it includes the hashed id of the post</br>
+Convert a post, created by another user, for examply by `admin` - post number 2</br>
+Hash number 2 with MD5 and change the delete hash in the delete request</br>
+This will be executed, i.e. it is possible to delete other peoples posts and it will give a flag</br>
 
-
-
-
+![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-10-02%2023-44-44.png?raw=true)
 
 ## Solution 6th flag
 
