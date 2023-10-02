@@ -18,15 +18,23 @@ It turns out that page with id number 2 contains the flag:</br>
 ![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-10-02%2002-28-05.png?raw=true)
 
 ## Solution 2nd flag
+When logged in and requests are being made an id cookie is sent</br>
+I copied the cookie in Cyberchef.io and with Magic it suggests it might be Base64, Hex or Hexdump</br>
+Decoding with either the aforementioned hashing, it didn't work</br>
+MD5 is also often used for hashing. When decoding it online, it indeed turned out to be MD5 and it returned a number</br>
+This means, the cookie is probably the id of the user logged in</br>
+In order to find the right hash for the admin, we can hash each number and see which one is for the admin user</br>
 
+![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-10-02%2003-01-18.png?raw=true)
 
+In ZAP send the request for account.php (Settings) to Open/Resend with Request Editor and send a request for number 1</br>
+This is right away the cookie for the admin, it shows admin as user and it shows the password for the admin</br>
 
+![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-10-02%2003-02-20.png?raw=true)
 
+Now logout as the normal user and log in with the credentials with the admin</br>
 
-
-
-This make a request and will show the flag:</br>
-`^FLAG^b2847b8fedbcde8db7c2c99f605364a6dbaa0f24a4cb02587e45707ce6f80f60$FLAG$`
+![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-10-02%2003-03-20.png?raw=true)
 
 ## Solution 3rd flag
 
