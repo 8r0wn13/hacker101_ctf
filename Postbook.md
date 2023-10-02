@@ -46,10 +46,11 @@ Log in with the user `user` and password `password` in order to get the flag</br
 ![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-10-02%2023-26-53.png?raw=true)
 
 ## Solution 4th flag
+When a post is created, it is possible to edit the post</br>
+In the URL is the id included of that respective post</br>
+When changing the id to 2, and click on `Save`, it will show the flag</br>
 
-
-
-
+![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/Screenshot%20from%202023-10-02%2023-33-30.png?raw=true)
 
 ## Solution 5th flag
 
