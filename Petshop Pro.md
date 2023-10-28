@@ -16,11 +16,10 @@ Remove the hidden field tag and it should show an input box with the items in th
 
 ![alt](https://github.com/8r0wn13/hacker101_ctf/blob/main/images/3v44f0t6gr59oxhnro83.png?raw=true)
 
-After changing the amounts to zero and click on Checkout, it will show the summary and the flag.</br>
+After changing the amounts to zero and click on Check Out, it will show the summary and the flag.</br>
 
 ## Solution 2nd flag
-When logged in and requests are being made an id cookie is sent</br>
-I copied the cookie in Cyberchef.io and with Magic it suggests it might be Base64, Hex or Hexdump</br>
+
 
 
 ## Solution 3rd flag
