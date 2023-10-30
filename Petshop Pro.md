@@ -19,6 +19,12 @@ Remove the hidden field tag and it should show an input box with the items in th
 After changing the amounts to zero and click on Check Out, it will show the summary and the flag.</br>
 
 ## Solution 2nd flag
+When checking if there are other endpoints, it seems there is a login portal accepting credentials in clear text.</br>
+Trying different usernames, result in the same error message "Invalid username".</br>
+Brute-force first the username with Hydra (I have Burp Community Edition and Intruder is limited in this version and therefore very slow). Hence, I use Hydra.</br>
+
+hydra -L names.txt -p aaa 34.209.233.57 http-post-form "/67acabbcfcd64a73d8e5f43d5cd8947d.ctf.hacker101.com/login:username=^USER^&password=^PASS^:Incorrect password" -T 32
+
 
 
 
