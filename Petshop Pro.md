@@ -21,11 +21,12 @@ After changing the amounts to zero and click on Check Out, it will show the summ
 ## Solution 2nd flag
 When checking if there are other endpoints, it seems there is a login portal accepting credentials in clear text.</br>
 Trying different usernames, result in the same error message "Invalid username".</br>
-Brute-force first the username with Hydra (I have Burp Community Edition and Intruder is limited in this version and therefore very slow). Hence, I use Hydra.</br>
+Brute-force first the username.</br>
 
-`hydra -L names.txt -p aaa 34.209.233.57 http-post-form "/67acabbcfcd64a73d8e5f43d5cd8947d.ctf.hacker101.com/login:username=^USER^&password=^PASS^:Incorrect password" -T 32`
+I tried to brute-force it with OWASP ZAP and Hydra, but OWASP ZAP doesn't support filtering for strings in reponse bodies and Hydra was incredibly slow.</br>
+Burp Community doesn't support Intruder, unless it is very slow, however, after searching on Google it turns out there is Turbo Intruder, which is supported by Burp Community as well.</br>
+With this I found 1 username, which we can now bruteforce with passwords, also with Turbo Intruder in Burp.</br>
 
-
-
+After finding the password for this specific user and logging into the application, it will show the flag right away.</br>
 
 ## Solution 3rd flag
