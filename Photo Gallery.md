@@ -62,7 +62,7 @@ It will continue, with showing the contents of the table photos:</br>
 [23:49:39] [INFO] retrieved: 2
 [23:49:55] [INFO] retrieved: 1
 [23:50:04] [INFO] retrieved: Purrfect
-[23:51:31] [INFO] retrieved: db0a95f3309e376a60e8050bad27fc4e9aff35d6b876dcefe6ac5933ad300068
+[23:51:31] [INFO] retrieved: <<here will be the flag, with the flag tags>>
 [00:04:22] [INFO] retrieved: 3
 [00:04:37] [INFO] retrieved: 1
 [00:04:50] [INFO] retrieved: Invisible
