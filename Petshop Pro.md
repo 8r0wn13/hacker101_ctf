@@ -30,3 +30,7 @@ With this I found 1 username, which we can now bruteforce with passwords, also w
 After finding the password for this specific user and logging into the application, it will show the flag right away.</br>
 
 ## Solution 3rd flag
+When logged in, it is possible to edit the details of the pictures.</br>
+Try with the following script `<img src=x onerror=alert(1)>` to save it in one of the fields.</br>
+Once the payload is successfully saved, add the item to your cart and check your cart with items (do not go to Check Out).</br>
+When checking the items in the cart, it will show the flag.</br>
