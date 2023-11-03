@@ -29,5 +29,5 @@ Create a comment with the following payload:
 
 Approve it being the admin at the address `?page=admin.inc`
 
-Go to ?page=http://127.0.0.1/index and open the source code.</br>
+Go to `?page=http://127.0.0.1/index` and open the source code.</br>
 This will show the PHP source code of index.php.
