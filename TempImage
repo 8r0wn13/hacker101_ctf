@@ -1,0 +1,26 @@
+# TempImage
+
+## Description
+This write up will show how to solve the CTF for "TempImage"
+
+**Difficulty:** Moderate
+
+Hints are not being provided for multiple reasons:</br>
+1. It is better to figure it out yourself and I don't want to give spoilers, especially if you don't need one
+2. It is only possible to get a hint every once in a while, i.e. it is not possible to get all the hints one after another. This will take too much time to "wait" for all the hints
+
+## Solution 1st flag
+The web page shows only an option to upload a file.</br>
+When uploading a random file it will give an error message for any other file than a *.png file.</br>
+
+After uploading successfully a png file, it is being stored in the `files` folder.</br>
+
+When trying path traversal and adding `/../../test.php` after Content-Disposition: form-data; name="filename", it will show the flag.</br>
+
+## Solution 2nd flag
+As seen in the solution for the first flag, it accepts php injection.</br>
+
+Now, leaving `/../../test.php` as where it is in the request, add the following line: `<?php system("ls");?>` before `------WebKitFormBoundaryF56mXuppDjDDT1ve Content-Disposition: form-data; name="filename"`</br>
+This will show the files which are in the specific folder.</br>
+There is an index.php file, hence use the following injection `<?php system("cat index.php");?>` to show the contents of index.php.</br>
+In index.php is the flag.
