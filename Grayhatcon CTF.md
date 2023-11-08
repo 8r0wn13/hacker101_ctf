@@ -53,6 +53,19 @@ This means the s3cr3t-4dm1n folder can only be accessed from these IP's. Make th
 This should give the flag, but it doesn't. It still gives a response 403 Forbidden.</br>
 
 ## Solution 2nd flag
+When resetting the password it only requires the username.</br>
+When checking the source code, there is a hidden field for account_hash.</br>
+Reset the password for user `hunter2` and the account_hash will be: `cf505baebbaf25a0a4c63eb93331eb36`
+
+It is possible to create a normal user or a subuser. The only difference is, that the subuser has a owner_hash.</br>
+In Burp, turn on Intercept and give a username and password for the new user.</br>
+Click on Register and in Burp add `account_hash=cf505baebbaf25a0a4c63eb93331eb36&` before new_username and send the request.</br>
+This will create a new user under hunter2. Clicking a few times on forward, it will log in under the new user and show the flag.</br>
+
+
+hunter2: cf505baebbaf25a0a4c63eb93331eb36
+Testuser3: 1c8dd140c8e516150ff75827ba77017f
+
 
 
 
