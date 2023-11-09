@@ -60,7 +60,12 @@ Reset the password for user `hunter2` and the account_hash will be: `cf505baebba
 It is possible to create a normal user or a subuser. The only difference is, that the subuser has a owner_hash.</br>
 In Burp, turn on Intercept and give a username and password for the new user.</br>
 Click on Register and in Burp add `account_hash=cf505baebbaf25a0a4c63eb93331eb36&` before new_username and send the request.</br>
-This will create a new user under hunter2. Clicking a few times on forward, it will log in under the new user and show the flag.</br>
+This will create a new user under hunter2. Clicking a few times on forward.</br>
+Now log in with the new user credentials and it will show the flag.</br>
+
+
+
+
 
 
 hunter2: cf505baebbaf25a0a4c63eb93331eb36
