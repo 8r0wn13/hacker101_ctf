@@ -70,15 +70,16 @@ When going to that end-point, it returns an error `"error":"X-Session header aut
 When adding a the X-Token and use it for X-Session, it returns the flag.</br>
 
 ## Solution 7th flag
-
-
-
+When following the JSON file from the previous flag, it shows a path `api/v2/user/posts/{id}`</br>
+Sending a request to v2, gives an error: `"error":"X-Session header authentication missing"`</br>
+Trying the same api endpoint, but on v1, works and will give the flag.</br>
 
 ## Solution 8th flag
-
-
-
-
-
-
-username=zcvzcv&password=zvzv
+In the response from the previous flag, it shows `"analytics":"/api/v1/post-analytics/3c8a6664b8203c2e0b2b24972ccf5ce3"}`</br>
+Trying the endpoint `/api/v1/post-analytics/3c8a6664b8203c2e0b2b24972ccf5ce3`, it returns `"hash":"3c8a6664b8203c2e0b2b24972ccf5ce3","post":1,"views":34373`.</br>
+So that provides only the number of view for that particular post, not useful.</br>
+Try to traverse the path with ..\: `/api/v1/post-analytics/..\`</br>
+The response will show another endpoint: `/public`</br>
+Going to `/api/v1/post-analytics/..\public` is not showing anything relevant.</br>
+Try to fuzz for other endpoints with the api-endpoints-res.txt list.</br>
+It will show `private` as another endpoint. Try: `/api/v1/post-analytics/..\private` and it will show the flag.
