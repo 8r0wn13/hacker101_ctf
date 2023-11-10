@@ -1,7 +1,7 @@
-# Y2FuIHlvdSByZWNvbj8/
+# Hackyholidays CTF
 
 ## Description
-This write up will show how to solve the CTF for "Y2FuIHlvdSByZWNvbj8/"
+This write up will show how to solve the CTF for "Hackyholidays CTF"
 
 **Difficulty:** Moderate
 
