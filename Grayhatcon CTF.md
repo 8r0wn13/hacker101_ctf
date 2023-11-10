@@ -63,17 +63,20 @@ Click on Register and in Burp add `account_hash=cf505baebbaf25a0a4c63eb93331eb36
 This will create a new user under hunter2. Clicking a few times on forward.</br>
 Now log in with the new user credentials and it will show the flag.</br>
 
+## Solution 3rd flag
+Create another subuser, like was done for the 2nd flag.</br>
+Before clicking Create SubUser, turn Intercept on.</br>
+In the intercepted request, change the following:</br>
+Change userhash to `cf505baebbaf25a0a4c63eb93331eb36` (hunter2's hash)</br>
+Add `hash=49d87a754332a258ebf94c03a110eca4&` at the beginning of the parameters (change the hash of hunter2's subuser you want to enable)</br>
+Add at the end `&enable_toggle=enable`</br>
+It should look like this: `hash=49d87a754332a258ebf94c03a110eca4&owner_hash=3e113376e84e5f0c626b7627be902c0e&new_username=testuser6&new_password=password&enable_toggle=enable`</br>
+Click Forward and change the userhash to `cf505baebbaf25a0a4c63eb93331eb36` (hunter2's hash)</br>
+Click Forward again.</br>
+Now login with the respective subuser, where it will show the flag.</br>
 
-
-
-
-
-hunter2: cf505baebbaf25a0a4c63eb93331eb36
-Testuser3: 1c8dd140c8e516150ff75827ba77017f
-
-
-
-
+## Solution 4th flag
+The challenge is broken.
 
 
 
