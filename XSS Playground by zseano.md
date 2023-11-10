@@ -23,28 +23,11 @@ Pop-up of available XSS in this page:</br>
 Good luck! - zseano & HackerOne</br>
 
 ## Solution 1st flag
-There are 2 solutions on the internet.</br>
-
-The first one is to copy the getemail Javascript function to the console and add `&& console.log(t.responseText)` to onreadystatechange:</br>
-```
-var t=new XMLHttpRequest;
-t.open("GET","/api/action.php?act=getemail",!0)
-t.setRequestHeader("X-SAFEPROTECTION","enNlYW5vb2Zjb3Vyc2U=")
-t.onreadystatechange = function(){ 
-    this.readyState === XMLHttpRequest.DONE && this.status && console.log(t.responseText) 
-}
-t.send()
-```
-
-This solution doesn't work for me as it returns "Undefined". When loading the page, I get an error in the custom.js on row 71:</br>
-```
-1 == who.includes('zsh1') &&
-document.write('<img src=/1x1.gif?' + decodeURI(who) + '></img>');
-```
-
-The error message is that 'who' is not defined.</br>
-
-When I add `/api/action.php?act=getemail` to the main URL, it leaves the page blank and if I run the snippet in the console again, I get a 404 - Page not found.</br>
-
-The second solution is a YouTube demo, where Burp Suite is intercepting the request of the main URL, add `/api/action.php?act=getemail` to the main URL and add `X-SAFEPROTECTION: enNlYW5vb2Zjb3Vyc2U=` to the header.</br>
-This will return 200 OK, but no output, i.e. the flag, where, according to the demo the flag should appear.</br>
+When looking at custom.js, there is a function to get the email: `/api/action.php?act=getemail`</br>
+This requires an additional security header: `X-SAFEPROTECTION:enNlYW5vb2Zjb3Vyc2U=`</br>
+In burp it didn't work, as the security header needs to be capitalized and Burp is making it title case.</br>
+In curl it didn't work either, as on the background apparently something similar happened as in Burp.</br>
+After some research on the internet, this can be avoided, by setting the http header to HTTP1.1, while the standard request is HTTP2.</br>
+This didn't work in Burp either, but when running the following command in the terminal, it worked:</br>
+`curl https://e884d55c39556e615b0eb31104e29e5d.ctf.hacker101.com/api/action.php?act=getemail -H X-SAFEPROTECTION:enNlYW5vb2Zjb3Vyc2U= --http1.1`
+This will return the flag, however, the flag is missing `FLAG$` at the end, hence don't forget to add that. :-)
