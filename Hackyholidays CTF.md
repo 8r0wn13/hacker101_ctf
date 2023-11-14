@@ -174,10 +174,52 @@ Open the file flag.txt and you've got the flag.</br>
 ## Solution 6th flag
 Hackers! It looks like the Grinch has released his Diary on Grinch Networks. We know he has an upcoming event but he hasn't posted it on his calendar. Can you hack his diary and find out what it is?</br>
 
+When opening the page and inspecting the request, it has the following GET request: `/my-diary/?template=entries.html`</br>
+Fuzzing for other parameters did not returned any results. It will always redirect to `template`.</br>
+And also `entries.html` is the only file I could fuzz for.</br>
 
+Try to replace `entries.html` with `../../../../../etc/passwd` didn't result in anything either.</br>
+If the template is loading files relative to its own directory, it might work with `index.php`.</br>
+This works and will show the php code:</br>
+```
+<?php
+include_once('../../Flags.php');
+if( isset($_GET["template"])  ){
+    $page = $_GET["template"];
+    //remove non allowed characters
+    $page = preg_replace('/([^a-zA-Z0-9.])/','',$page);
+    //protect admin.php from being read
+    $page = str_replace("admin.php","",$page);
+    //I've changed the admin file to secretadmin.php for more security!
+    $page = str_replace("secretadmin.php","",$page);
+    //check file exists
+    if( file_exists($page) ){
+        $contents = file_get_contents($page);
+        $contents = str_replace('!'.'FLAG!',Flags::get(5),$contents);
+        echo $contents;
+    }else{
+        //redirect to home
+        header("Location: ../my-diary/?template=entries.html");
+        exit();
+    }
+}else{
+    //redirect to home
+    header("Location: ../my-diary/?template=entries.html");
+    exit();
+}
+```
 
+There is a file `admin.php` and `secretadmin.php`.</br>
+These are not accessible directly due to various replace operations in the above mentioned code.</br>
+However, `secretadmin.php` will return: `You cannot view this page from your IP Address`</br>
+`admin.php` is replaced by nothing `''`</br>
+`secretadmin.php` is replaced by `''` voor `admin.php`, resulting in `secret`</br>
+In the end we want to end up with `secretadsecretaadmin.phpdmin.phpmin.php`.</br>
+`admin.php` in the middle will be replaced with nothing, resulting in `secretadsecretadmin.phpmin.php`</br>
+Then `secretadmin.php` will be replaced with nothing, resulting in `secretadmin.php`</br>
+Hence, going to: `https://b43b6a4b819e36587e6f22e21cf3ac9a.ctf.hacker101.com/my-diary/secretadsecretaadmin.phpdmin.phpmin.php`</br>
 
-
+This will show the flag and the event `Launch DDoS Against Santa's Workshop!`</br>
 
 
 
