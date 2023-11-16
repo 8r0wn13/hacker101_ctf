@@ -242,12 +242,8 @@ The same is happening for the following:
 {{template:..\/..\/..\/..\/..\/..\/..\/..\/..\/etc\/passwd}}
 {{template:..\\..\\..\\..\\..\\..\\..\\..\\..\\etc\\passwd}}
 ```
-
-This is where I got stuck with the template injection.</br>
-For this I lookedup some writeups from others and Jakub Łakomy came to the following payload which worked and showed the flag:</br>
-`preview_markup=hello{{template:cbdj3_/*grinch*/_header.html}}{{77}}&preview_data={"name":"admin","email":"admin@admin.com","admin":true,"administrator":true,"77":"{{template:38dhs_/*admins_only*/_header.html}}"}`
-
-This requires diving deeper into the solution at a later stage, as I am not 100% sure how Jakub came to this solution.</br>
+When inspecting the source code, there is an HTML block with 2 hidden fields.</br>
+I deleted the hidden property in the source code, replace the value `Alice` in the `name` field with `{{template:38dhs_admins_only_header.html}}` and added `\`\`` in the preview-markup.</br>
+This provides the flag.</br>
 
 ## Solution 8th flag
-
