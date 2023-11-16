@@ -247,3 +247,16 @@ I deleted the hidden property in the source code, replace the value `Alice` in t
 This provides the flag.</br>
 
 ## Solution 8th flag
+The Grinch thought it might be a good idea to start a forum but nobody really wants to chat to him. He keeps his best posts in the Admin section but you'll need a valid login to access that!</br>
+
+After the puzzing the `forum` endpoint, it turns out there is a `phpmyadmin` page.</br>
+When on the forum main page, there is comment `You need to be an admin to view these posts`</br>
+Searching for this comment on Github, gave a result under the Grinch Network.</br>
+Browsing the history, it shows some credentials.</br>
+Log in with the credentials in phpmyadmin.</br>
+`comment`, `post` and `section` do not contain rows.</br>
+`user` has 2 rows with a user `grinch` and `max`, however, the passwords are hasched.</br>
+When Googling for the Grinch's password hash, it returns: `35d652126ca1706b59db02c93e0c9fbf:BahHumbug`</br>
+Loggin in with `grinch:BahHumbug`, makes a post visible: `Secret Plans`</br>
+Clicking through, will show the flag.</br>
+
