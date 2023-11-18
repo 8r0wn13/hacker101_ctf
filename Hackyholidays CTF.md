@@ -304,4 +304,37 @@ Running the above script to retrieve the password resulted in: `S3creT_p4ssw0rd-
 
 Logging in with `admin:S3creT_p4ssw0rd-$`, reveals the flag.</br>
 
+Or using sqlmap: `sqlmap -u 'https://f834948d674988f6455fdd98aaace408.ctf.hacker101.com/evil-quiz' --data 'name=cardinal' --second-url 'https://f834948d674988f6455fdd98aaace408.ctf.hacker101.com/evil-quiz/score' --random-agent --not-string 'There is 0 other player' --technique=B --level=3 --risk=3 --cookie 'quizsession=5a79d3ceb25c91acc4969c7bf57eaf7d'  -D quiz -T admin --dump`
+
 ## Solution 10th flag
+You've made it this far! The grinch is recruiting for his army to ruin the holidays but they're very picky on who they let in!</br>
+
+After inspecting the source code, there is a comment, that there is a `README.md`.</br>
+Going to `/signup-manager/README.md` it will download the file.</br>
+Users are stored in a file `users.txt`, not in a database, hence no SQLi here.</br>
+In order for the application to find the file, its location needs to be configured in `index.php`.</br>
+And there are user and admin php files.</br>
+And lastly there is a default login: `admin:password`</br>
+
+Trying the default login, doesn't work.</br>
+
+Fuzzing the endpoints `/signup-manager/FUZZ.txt` didn't result in any results, but `/signup-manager/FUZZ.php`, resulted in the following:</br>
+```
+admin
+index
+signup
+user
+```
+The pages `admin.php`, `signup.php` and `user.php` are not directly accessible: `You cannot access this page directly`.</br>
+`index.php` contains the main page of `/signup-manager/`.</br>
+
+There is also a zip file mentioned: `signupmanager.zip`, downloading these files and inspecting `index.php`, it seems as follows:
+1. username is 15 characters maximum length
+2. the last character of the last name needs to be a `Y` in order to be flagged for an administrator.</br>
+3. all fields are capped to a certain length, except `age`
+4. `age` can maximum 3 characters, needs to be an numeric and it is preceeded by the `lastname` field, hence the character `1e3`
+
+In the page, press F12 and change the value of age zero to `1e3`, give a username, password and first name.</br>
+Don't change the age as we just set it to `1e3` and for the lastname use `YYYYYYYYYYYYYYY` (15 x 'Y').</br>
+This will give the flag.</br>
+
