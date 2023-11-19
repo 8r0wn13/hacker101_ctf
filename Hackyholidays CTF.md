@@ -338,3 +338,18 @@ In the page, press F12 and change the value of age zero to `1e3`, give a usernam
 Don't change the age as we just set it to `1e3` and for the lastname use `YYYYYYYYYYYYYYY` (15 x 'Y').</br>
 This will give the flag.</br>
 
+## Solution 11th flag
+From the previous flag, it had a link in the message under the flag: `here`, taking the application to `/r3c0n_server_4fdk59`.</br>
+There are a few links to photo's, with a link `/r3c0n_server_4fdk59/album/?hash=jdh34k` (jdh34k is one the endpoints).</br>
+
+Adding `' or '1'='2` to the URL was still resulting in the web page loading, hence it might be vulnerable to sqli.</br>
+This means we can try to enumerate the database.</br>
+
+sqlmap found 2 tables, but both of no relevance.</br>
+`qlmap -u https://f834948d674988f6455fdd98aaace408.ctf.hacker101.com/r3c0n_server_4fdk59/album/?hash=jdh34k --random-agent --level=3 --risk=3 --dbs --thread=2 --dump`
+Unfortunately, this didn't lead to anything.</br>
+Checking the source code, there is a separate picture folder, which is one folder up in the folder hierarchy and the names of the pictures are base64 encoded.</br>
+When decoding one of the file names: `eyJpbWFnZSI6InIzYzBuX3NlcnZlcl80ZmRrNTlcL3VwbG9hZHNcLzliODgxYWY4YjMyZmYwN2Y2ZGFhZGE5NWZmNzBkYzNhLmpwZyIsImF1dGgiOiJlOTM0ZjQ0MDdhOWRmOWZkMjcyY2RiOWMzOTdmNjczZiJ9` it is being decoded as follows: `{"image":"r3c0n_server_4fdk59\/uploads\/9b881af8b32ff07f6daada95ff70dc3a.jpg","auth":"e934f4407a9df9fd272cdb9c397f673f"}`
+
+When enumerating the number of columns, with 3 three columns, there will be output:</br>
+`/r3c0n_server_4fdk59/album?hash=-1' union select 1,2,3 -- -`</br>
